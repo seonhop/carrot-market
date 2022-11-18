@@ -54,7 +54,7 @@ export default function Input({
 			{kind === "phone" ? (
 				<div className="flex rounded-md shadow-sm">
 					<span className="flex select-none items-center justify-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
-						+82
+						+1
 					</span>
 					<input
 						id={name}
