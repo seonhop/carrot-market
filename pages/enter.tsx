@@ -3,11 +3,25 @@ import { useState } from "react";
 import Button from "../components/button";
 import Input from "../components/input";
 import { cls } from "../libs/utils";
+import { useForm } from "react-hook-form";
+
+interface IEnterForm {
+	email?: string;
+	phone?: string;
+}
 
 const Enter: NextPage = () => {
+	const { register, reset, handleSubmit } = useForm<IEnterForm>();
 	const [method, setMethod] = useState<"email" | "phone">("email");
-	const onEmailClick = () => setMethod("email");
-	const onPhoneClick = () => setMethod("phone");
+	const onEmailClick = () => {
+		reset();
+		setMethod("email");
+	};
+	const onPhoneClick = () => {
+		reset();
+		setMethod("phone");
+	};
+	const onValid = (data: IEnterForm) => {};
 	return (
 		<div className="mt-16 px-4">
 			<h3 className="text-center text-3xl font-bold">
@@ -41,12 +55,22 @@ const Enter: NextPage = () => {
 						</button>
 					</div>
 				</div>
-				<form className="mt-8 flex flex-col space-y-4">
+				<form
+					onSubmit={handleSubmit(onValid)}
+					className="mt-8 flex flex-col space-y-4"
+				>
 					{method === "email" ? (
-						<Input name="email" label="Email address" type="email" required />
+						<Input
+							register={register("email")}
+							name="email"
+							label="Email address"
+							type="email"
+							required
+						/>
 					) : null}
 					{method === "phone" ? (
 						<Input
+							register={register("phone")}
 							name="phone"
 							label="Phone number"
 							type="number"
