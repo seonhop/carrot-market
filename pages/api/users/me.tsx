@@ -12,22 +12,19 @@ declare module "iron-session" {
 }
 
 async function handler(req: NextApiRequest, res: NextApiResponse<IResponse>) {
-	const { token } = req.body;
-	const exists = await client.token.findUnique({
+	console.log(req.session.user);
+	const profile = await client.user.findUnique({
 		where: {
-			payload: token,
+			id: req.session.user?.id,
 		},
 	});
-	if (!exists) res.status(404).end();
-	console.log(exists);
-	req.session.user = {
-		id: exists?.userId,
-	};
-	await req.session.save();
-	res.status(200).end();
+	res.json({
+		ok: true,
+		profile,
+	});
 }
 
-export default withIronSessionApiRoute(withHandler("POST", handler), {
+export default withIronSessionApiRoute(withHandler("GET", handler), {
 	cookieName: "carrotsession",
 	password:
 		"1241234asdhfkajsdhfkadjshfkadsjweriuoqewiursdjkafan,dfadsfnl5798174972",
