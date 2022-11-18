@@ -26,18 +26,10 @@ const Enter: NextPage = () => {
 		reset();
 		setMethod("phone");
 	};
-	const onValid = (data: IEnterForm) => {
-		setSubmitting(true);
-		fetch("/api/users/enter", {
-			method: "POST",
-			body: JSON.stringify(data),
-			headers: {
-				"Content-Type": "application/json",
-			},
-		}).then(() => {
-			setSubmitting(false);
-		});
+	const onValid = (validForm: IEnterForm) => {
+		enter(validForm);
 	};
+	console.log(loading, data, error);
 	return (
 		<div className="mt-16 px-4">
 			<h3 className="text-center text-3xl font-bold">
